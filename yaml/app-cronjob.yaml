@@ -1,15 +1,19 @@
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: app-cronjob
+  name: hello
 spec:
-  schedule: "*/5 * * * *"
+  schedule: "* * * * *"
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-            - name: app-container
-              image: your-image:tag
-              command: ["./app"]
+          - name: hello
+            image: busybox:1.28
+            imagePullPolicy: IfNotPresent
+            command:
+            - /bin/sh
+            - -c
+            - date; echo Hello from the Kubernetes cluster
           restartPolicy: OnFailure
